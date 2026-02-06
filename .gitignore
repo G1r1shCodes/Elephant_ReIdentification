@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data (exclude large datasets from version control)
+data/raw/
+data/processed/
+data/processed_megadetector/
+
+# Outputs
+outputs/visualizations/*.png
+outputs/visualizations/*.jpg
+outputs/models/*.pth
+outputs/models/*.h5
+outputs/results/*.csv
+outputs/results/*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Obsidian
+.obsidian/
+
+# Backups
+backup_*/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Documentation builds
+docs/_build/
