@@ -1,104 +1,62 @@
-# Elephant Re-Identification (WII)
+# Elephant Re-Identification System
 
-This repository implements an open-set biometric elephant re-identification system for the Wildlife Institute of India.
+Open-set biometric elephant re-identification for Wildlife Institute of India.
 
-## 📁 Project Structure
-
-```
-Elephant_ReIdentification/
-│
-├── 📂 data/                          # Dataset (excluded from git)
-│   ├── raw/                          # Original images with annotations
-│   ├── processed/                    # Preprocessed crops
-│   └── processed_megadetector/       # MegaDetector outputs
-│
-├── 📂 src/                           # Source code
-│   ├── preprocessing/                # Data preprocessing scripts
-│   ├── models/                       # Model architectures (future)
-│   └── utils/                        # Utility functions
-│
-├── 📂 notebooks/                     # Jupyter notebooks for exploration
-│
-├── 📂 docs/                          # Documentation
-│   ├── methodology/                  # Research methodology
-│   ├── progress/                     # Progress reports
-│   └── design_notes/                 # Design decisions and changes
-│
-├── 📂 outputs/                       # Generated outputs
-│   ├── visualizations/               # Plots and comparisons
-│   ├── models/                       # Trained models
-│   └── results/                      # Experiment results
-│
-├── 📂 tests/                         # Unit tests
-│
-├── 📂 scripts/                       # Standalone scripts
-│
-├── .gitignore                        # Git ignore rules
-├── README.md                         # This file
-└── requirements.txt                  # Python dependencies
-```
-
-## 🚀 Getting Started
-
-### 1. Setup Environment
+## Quick Start
 
 ```bash
-# Create virtual environment
+# Setup
 python -m venv .venv
-
-# Activate virtual environment
-# Windows:
 .venv\Scripts\activate
-# Linux/Mac:
-source .venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
-```
 
-### 2. Run Preprocessing
-
-```bash
-# Navigate to preprocessing directory
+# Run preprocessing
 cd src/preprocessing
-
-# Run preprocessing script
 python preprocess.py
 ```
 
-## 📚 Documentation
+## Project Structure
 
-- **Methodology**: See `docs/methodology/WII_Elephant_ReID_System.pdf`
-- **Design Notes**: See `docs/design_notes/`
-- **Progress Reports**: See `docs/progress/`
-
-## 🔬 Research Approach
-
-This project follows a biologically-aware approach to elephant re-identification:
-
-1. **Phase A**: Data collection and annotation
-2. **Phase B**: Biologically-aware preprocessing (current)
-3. **Phase C**: Feature extraction (planned)
-4. **Phase D**: Matching and re-identification (planned)
-
-### Key Principles
-
-- **Arrow as Identity Selector**: Arrows indicate which elephant, not where to crop
-- **Biological Bias**: Crops prioritize head/ears/temporal gland regions
-- **Large Contextual Crops**: Preserve identity-bearing anatomy
-- **Deterministic Processing**: Classical CV, no deep learning in preprocessing
-
-## 📝 Code Implementation
-
-Code follows the approved algorithmic roadmap documented in `docs/methodology/`.
-
-## 🧪 Testing
-
-```bash
-# Run tests (when available)
-pytest tests/
+```
+├── data/                    # Datasets (gitignored)
+│   ├── raw/                 # Original annotated images
+│   ├── processed/           # Preprocessed crops
+│   └── processed_megadetector/
+├── src/                     # Source code
+│   ├── preprocessing/       # Preprocessing scripts
+│   ├── models/              # Models (future)
+│   └── utils/               # Utilities
+├── notebooks/               # Jupyter notebooks
+├── docs/                    # Documentation
+│   ├── methodology/         # Research methodology
+│   ├── progress/            # Progress reports
+│   └── design_notes/        # Design decisions
+├── outputs/                 # Generated outputs
+├── tests/                   # Unit tests
+└── scripts/                 # Standalone scripts
 ```
 
-## 📄 License
+## Approach
 
-Wildlife Institute of India Research Project
+**Biologically-aware preprocessing** using classical computer vision:
+- Arrow detection for identity selection (not spatial localization)
+- Large contextual crops (60-75%) preserving head/ears/temporal gland
+- Upward + forward bias from arrow anchor
+- No deep learning in preprocessing phase
+
+## Phases
+
+1. ✅ **Phase A**: Data collection & annotation
+2. 🔄 **Phase B**: Biologically-aware preprocessing (current)
+3. 📋 **Phase C**: Feature extraction (planned)
+4. 📋 **Phase D**: Matching & re-identification (planned)
+
+## Documentation
+
+- Methodology: `docs/methodology/WII_Elephant_ReID_System.pdf`
+- Design notes: `docs/design_notes/`
+- Progress: `docs/progress/`
+
+---
+
+**Wildlife Institute of India Research Project**
