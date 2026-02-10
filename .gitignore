@@ -81,3 +81,6 @@ docs/_build/
 # Large dataset files
 *.zip
 kaggle/elephant-reid-dataset.zip
+
+# Large notebook files (keep them local)
+notebooks/*.ipynb
