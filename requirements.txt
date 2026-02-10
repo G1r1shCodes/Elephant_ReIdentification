@@ -1,5 +1,6 @@
 # Core dependencies for Elephant Re-Identification System
-# Detection-based preprocessing (Phase B)
+# Phase B: Detection-based preprocessing
+# Phase C: Feature extraction
 
 # Image processing
 opencv-python>=4.8.0
@@ -23,9 +24,6 @@ ipywidgets>=8.1.0
 # Progress bars
 tqdm>=4.64.0
 
-# JSON handling (built-in, but listing for clarity)
-# json
-
-# Optional: Deep learning (if needed for future phases)
-# torch>=2.0.0
-# torchvision>=0.15.0
+# Deep learning (Phase C: Feature extraction)
+torch>=2.0.0
+torchvision>=0.15.0
