@@ -77,3 +77,7 @@ docs/_build/
 *.pth
 *.pt
 *.ckpt
+
+# Large dataset files
+*.zip
+kaggle/elephant-reid-dataset.zip
