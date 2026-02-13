@@ -134,15 +134,19 @@ def load_gallery():
         return {}
 
 
-def save_gallery(gallery):
-    """Save updated database to gallery_embeddings.pt"""
+def save_gallery(gallery, test_mode=False):
+    """Save updated database to gallery_embeddings.pt or gallery_test.pt"""
     import numpy as np
     import shutil
     
-    gallery_path = resource_path("gallery_embeddings.pt")
+    # Use test file if in test mode
+    if test_mode:
+        gallery_path = resource_path("gallery_test.pt")
+    else:
+        gallery_path = resource_path("gallery_embeddings.pt")
     
-    # Create backup before overwriting
-    if os.path.exists(gallery_path):
+    # Create backup before overwriting (only for production mode)
+    if not test_mode and os.path.exists(gallery_path):
         backup_path = gallery_path.replace('.pt', f'_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.pt')
         shutil.copy(gallery_path, backup_path)
     
@@ -416,10 +420,13 @@ def main():
                     gallery[new_id]['image_paths'].append(str(img_path))
                     gallery[new_id]['num_images'] += 1
                     
-                    save_gallery(gallery)
+                    save_gallery(gallery, test_mode=test_mode)
                     
-                    st.success(f"✅ Successfully registered **{new_id}**!")
-                    st.balloons()
+                    if test_mode:
+                        st.success(f"✅ Test elephant **{new_id}** saved to test database! (Main database unchanged)")
+                    else:
+                        st.success(f"✅ Successfully registered **{new_id}** to production database!")
+                        st.balloons()
                     
                     # Clear cache to reload gallery
                     st.cache_data.clear()
