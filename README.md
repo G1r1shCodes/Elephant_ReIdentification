@@ -1,4 +1,4 @@
-# Elephant Re-Identification System
+# Unique Elephant Identification System
 
 Open-set biometric elephant re-identification for Wildlife Institute of India.
 
@@ -28,7 +28,7 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # Evaluate trained model
-python evaluate_kaggle_model.py
+python tests\evaluate_kaggle_model.py
 
 # Run verification tests
 python tests\verify_phase_c.py
@@ -74,9 +74,11 @@ python tests\verify_phase_c.py
 │   │   └── kaggle_model_evaluation/
 │   └── visualizations/      # Attention maps, etc.
 ├── tests/                   # Tests & verification
+│   ├── evaluate_kaggle_model.py  # Model evaluation script
 │   └── verify_phase_c.py    # Methodology compliance tests
-├── scripts/                 # Standalone scripts
-├── evaluate_kaggle_model.py # Model evaluation script
+├── scripts/                 # Utility scripts
+│   ├── organize_data.py     # Data organization
+│   └── visualize_bam.py     # BAM visualization
 └── requirements.txt
 ```
 

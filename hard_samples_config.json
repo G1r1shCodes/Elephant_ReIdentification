@@ -1,0 +1,72 @@
+[
+    {
+        "identity": "Makhna_5",
+        "error_rate": 42.857142857142854,
+        "weight": 1.8571428571428572
+    },
+    {
+        "identity": "Makhna_7",
+        "error_rate": 75.0,
+        "weight": 2.5
+    },
+    {
+        "identity": "Makhna_1",
+        "error_rate": 34.78260869565217,
+        "weight": 1.6956521739130435
+    },
+    {
+        "identity": "Makhna_15",
+        "error_rate": 55.55555555555556,
+        "weight": 2.111111111111111
+    },
+    {
+        "identity": "Makhna_14",
+        "error_rate": 100.0,
+        "weight": 3.0
+    },
+    {
+        "identity": "Makhna_3",
+        "error_rate": 40.0,
+        "weight": 1.8
+    },
+    {
+        "identity": "Makhna_2",
+        "error_rate": 14.285714285714285,
+        "weight": 1.2857142857142856
+    },
+    {
+        "identity": "Makhna_9",
+        "error_rate": 10.714285714285714,
+        "weight": 1.2142857142857142
+    },
+    {
+        "identity": "Makhna_12",
+        "error_rate": 20.0,
+        "weight": 1.4
+    },
+    {
+        "identity": "Makhna_16",
+        "error_rate": 100.0,
+        "weight": 3.0
+    },
+    {
+        "identity": "Makhna_17",
+        "error_rate": 50.0,
+        "weight": 2.0
+    },
+    {
+        "identity": "Makhna_18",
+        "error_rate": 100.0,
+        "weight": 3.0
+    },
+    {
+        "identity": "Makhna_4",
+        "error_rate": 11.11111111111111,
+        "weight": 1.2222222222222223
+    },
+    {
+        "identity": "Makhna_19",
+        "error_rate": 100.0,
+        "weight": 3.0
+    }
+]

@@ -21,6 +21,9 @@ jupyter>=1.0.0
 ipykernel>=6.25.0
 ipywidgets>=8.1.0
 
+# Web application (Demo)
+streamlit>=1.28.0
+
 # Progress bars
 tqdm>=4.64.0
 

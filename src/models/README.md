@@ -1,4 +1,4 @@
-# Elephant Re-Identification Models
+# Unique Elephant Identification System - Models
 
 This directory contains the dual-branch feature extraction architecture for biologically-aware elephant re-identification.
 

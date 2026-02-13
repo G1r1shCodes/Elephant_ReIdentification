@@ -38,16 +38,26 @@ from typing import List, Tuple, Optional, Dict
 from megadetector.detection import run_detector
 from megadetector.visualization import visualization_utils as vis_utils
 
+# RAW image support
+try:
+    import rawpy
+    HAS_RAWPY = True
+except ImportError:
+    HAS_RAWPY = False
+    print("⚠️ rawpy not installed - .NRW files will be skipped")
+
 
 # ==================== CONFIGURATION ==================== #
 
-# Root paths
-DATA_ROOT = "../../data"
-PROCESSED_ROOT = os.path.join(DATA_ROOT, "processed_megadetector")
+# Root paths - use absolute paths
+SCRIPT_DIR = Path(__file__).parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
+DATA_ROOT = PROJECT_ROOT / "data"
+PROCESSED_ROOT = DATA_ROOT / "processed_megadetector"
 
 # Raw dataset paths
-MAKHNA_RAW = os.path.join(DATA_ROOT, "Makhna_id_udalguri_24", "Makhna_id_udalguri_24")
-HERD_RAW = os.path.join(DATA_ROOT, "Herd_ID_Udalguri_24", "Herd_ID_Udalguri_24")
+MAKHNA_RAW = DATA_ROOT / "raw" / "Makhna_id_udalguri_24" / "Makhna_id_udalguri_24"
+HERD_RAW = DATA_ROOT / "raw" / "Herd_ID_Udalguri_24" / "Herd_ID_Udalguri_24"
 
 # MegaDetector parameters (VALIDATED)
 CONFIDENCE_THRESHOLD = 0.4  # Validated in exploration
@@ -60,11 +70,47 @@ ARROW_HSV_UPPER1 = np.array([10, 255, 255])
 ARROW_HSV_LOWER2 = np.array([160, 100, 100])
 ARROW_HSV_UPPER2 = np.array([180, 255, 255])
 
-# Supported image formats
+# Supported image formats (NRW files already converted to JPG)
 VALID_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'}
 
 # Global detector (loaded once)
 detector = None
+
+
+# ==================== IMAGE LOADING ====================  #
+
+def load_image_with_raw_support(image_path):
+    """
+    Load image with support for RAW formats (.NRW).
+    
+    Args:
+        image_path: Path to image file
+        
+    Returns:
+        BGR image as numpy array, or None if failed
+    """
+    _, ext = os.path.splitext(image_path)
+    
+    # Check if it's a RAW format
+    if ext.lower() in ['.nrw']:
+        if not HAS_RAWPY:
+            print(f"  ⚠️ Skipping {os.path.basename(image_path)} - rawpy not installed")
+            return None
+        
+        try:
+            # Load RAW file using rawpy
+            with rawpy.imread(image_path) as raw:
+                # Convert to RGB (8-bit)
+                rgb = raw.postprocess()
+                # Convert RGB to BGR for OpenCV
+                bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+                return bgr
+        except Exception as e:
+            print(f"  ⚠️ Failed to load RAW file {os.path.basename(image_path)}: {e}")
+            return None
+    else:
+        # Standard image formats
+        return cv2.imread(image_path)
 
 
 # ==================== MEGADETECTOR INTEGRATION ==================== #
@@ -302,12 +348,15 @@ def process_dataset(input_root, output_base_name):
     6. Save to processed directory
     
     Args:
-        input_root: Raw dataset directory path
+        input_root: Raw dataset directory path (Path object or string)
         output_base_name: Name for output folder
         
     Returns:
         Dictionary with processing statistics
     """
+    # Convert to string for os.walk
+    input_root = str(input_root)
+    
     stats = {
         'total': 0,
         'processed': 0,
@@ -340,8 +389,8 @@ def process_dataset(input_root, output_base_name):
             stats['total'] += 1
             
             try:
-                # Read image
-                image = cv2.imread(input_path)
+                # Read image (with RAW support)
+                image = load_image_with_raw_support(input_path)
                 if image is None:
                     stats['errors'].append((input_path, "Failed to read image"))
                     print(f"[SKIP] {filename} - Failed to read")
@@ -394,14 +443,14 @@ def process_dataset(input_root, output_base_name):
                 
                 # Construct output path
                 relative_path = os.path.relpath(input_path, input_root)
-                output_path = os.path.join(PROCESSED_ROOT, output_base_name, relative_path)
-                output_path = os.path.splitext(output_path)[0] + ".jpg"
+                output_path = PROCESSED_ROOT / output_base_name / relative_path
+                output_path = output_path.with_suffix('.jpg')  # Convert extension to .jpg
                 
                 # Create output directory
-                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                output_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 # Save processed image
-                cv2.imwrite(output_path, cropped_image)
+                cv2.imwrite(str(output_path), cropped_image)
                 
                 stats['processed'] += 1
                 conf = selected.get('conf', 0)
@@ -454,7 +503,7 @@ def main():
     print("="*80)
     
     # Create output directory
-    os.makedirs(PROCESSED_ROOT, exist_ok=True)
+    PROCESSED_ROOT.mkdir(parents=True, exist_ok=True)
     print(f"\nOutput directory: {PROCESSED_ROOT}")
     
     # Process Makhna dataset

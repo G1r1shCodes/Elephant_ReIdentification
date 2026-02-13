@@ -43,10 +43,10 @@ class BiologicalAttentionMap(nn.Module):
         )
         
         # Spatial attention (where to look)
+        # Using single 7x7 conv layer to match trained model architecture
+        # Goes directly from in_channels to 1 output channel
         self.spatial_attention = nn.Sequential(
-            nn.Conv2d(in_channels, in_channels // reduction, 1),
-            nn.ReLU(),
-            nn.Conv2d(in_channels // reduction, 1, 1),
+            nn.Conv2d(in_channels, 1, kernel_size=7, padding=3),
             nn.Sigmoid()
         )
         
