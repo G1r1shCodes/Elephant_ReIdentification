@@ -214,15 +214,21 @@ class ElephantDataset(Dataset):
 # ============================================================================
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description='Evaluate Elephant Re-ID Model')
+    parser.add_argument('--model_path', type=str, default='src/models/best_model.pth', help='Path to model checkpoint')
+    parser.add_argument('--results_dir', type=str, default='outputs/results/kaggle_model_evaluation', help='Directory to save results')
+    args = parser.parse_args()
+
     # Config
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     DATA_ROOT = Path("data/processed_megadetector")
-    model_path = Path("src/models/best_model.pth")
-    results_dir = Path("outputs/results/kaggle_model_evaluation")
+    model_path = Path(args.model_path)
+    results_dir = Path(args.results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
     
     print("="*80)
-    print("Kaggle Model Evaluation (Epoch 74)")
+    print(f"Model Evaluation")
     print("="*80)
     print(f"Model: {model_path}")
     print(f"Device: {device}")
@@ -234,7 +240,15 @@ def main():
     print(f"  Epoch: {checkpoint.get('epoch', 'N/A')}")
     
     model = DualBranchFeatureExtractor(embedding_dim=128, use_bam=True).to(device)
-    model.load_state_dict(checkpoint['model'])
+    
+    if isinstance(checkpoint, dict) and 'model' in checkpoint:
+        state_dict = checkpoint['model']
+    elif isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+        state_dict = checkpoint['model_state_dict']
+    else:
+        state_dict = checkpoint
+        
+    model.load_state_dict(state_dict, strict=False)
     model.eval()
     print("✓ Model loaded successfully!")
     
