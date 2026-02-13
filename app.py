@@ -299,7 +299,7 @@ def main():
                         <div style="font-size: 1.2rem; color: #555;">Best Match:</div>
                         <div class="match-title">{match_id}</div>
                         <div style="margin-top: 10px; font-size: 1.1rem;">
-                            Certainty: <b>{conf:.1f}%</b>
+                            <span style="background-color: #2E7D32; color: white; padding: 4px 8px; border-radius: 4px;">Certainty: <b>{conf:.1f}%</b></span>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)

@@ -84,3 +84,10 @@ kaggle/elephant-reid-dataset.zip
 
 # Large notebook files (keep them local)
 notebooks/*.ipynb
+
+# Data (restructured)
+data/restructured/
+
+# Generated Outputs
+outputs/makhna_confusion_matrix.png
+outputs/results/embedding_analysis.png
