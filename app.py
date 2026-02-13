@@ -135,10 +135,41 @@ def load_gallery():
 
 
 def save_gallery(gallery):
-    """Save updated database (Placeholder for simple file-based persistence)."""
-    # Real implementation would append to the .pt file or a database
-    # For this demo, we just acknowledge the action
-    pass
+    """Save updated database to gallery_embeddings.pt"""
+    import numpy as np
+    import shutil
+    
+    gallery_path = resource_path("gallery_embeddings.pt")
+    
+    # Create backup before overwriting
+    if os.path.exists(gallery_path):
+        backup_path = gallery_path.replace('.pt', f'_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.pt')
+        shutil.copy(gallery_path, backup_path)
+    
+    # Reconstruct the format expected by gallery_embeddings.pt
+    all_embeddings = []
+    all_labels = []
+    idx_to_identity = {}
+    
+    # Create index mapping
+    for idx, identity in enumerate(sorted(gallery.keys())):
+        idx_to_identity[idx] = identity
+        identity_embeddings = gallery[identity]['embeddings']
+        
+        for emb in identity_embeddings:
+            all_embeddings.append(emb)
+            all_labels.append(idx)
+    
+    # Convert to tensors
+    embeddings_tensor = torch.tensor(np.stack(all_embeddings), dtype=torch.float32)
+    labels_tensor = torch.tensor(all_labels, dtype=torch.int64)
+    
+    # Save to file
+    torch.save({
+        'embeddings': embeddings_tensor,
+        'labels': labels_tensor,
+        'idx_to_identity': idx_to_identity
+    }, gallery_path)
 
 
 @st.cache_resource
