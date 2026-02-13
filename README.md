@@ -20,6 +20,12 @@ Open-set biometric elephant re-identification for Wildlife Institute of India.
 
 See [`kaggle/README_KAGGLE_DEPLOYMENT.md`](kaggle/README_KAGGLE_DEPLOYMENT.md) for detailed instructions.
 
+### Running the App 🐘
+```bash
+# Start the Streamlit interface
+streamlit run app.py
+```
+
 ### Local Setup & Evaluation
 ```bash
 # Setup environment
@@ -42,11 +48,12 @@ python tests\verify_phase_c.py
    - Model trained to 85.26% Rank-1 accuracy
    - Training time: 41 minutes (38 epochs with early stopping)
    - GPU-optimized training pipeline
-4. 📋 **Phase D**: Open-set inference & enrollment (next)
+4. ✅ **Phase D**: Open-set inference & enrollment (App Deployed)
 
 ## Project Structure
 
 ```
+├── app.py                   # Streamlit Application
 ├── data/                    # Datasets (gitignored)
 │   ├── raw/                 # Original annotated images
 │   ├── processed/           # Preprocessed crops
@@ -67,10 +74,8 @@ python tests\verify_phase_c.py
 ├── notebooks/               # Jupyter notebooks
 ├── docs/                    # Documentation
 │   ├── methodology/         # Research methodology
-│   ├── implementation/      # Phase implementation docs
-│   └── design_notes/        # Design decisions
+│   └── implementation/      # Phase implementation docs
 ├── outputs/                 # Generated outputs
-│   ├── results/             # Evaluation results
 │   │   └── kaggle_model_evaluation/
 │   └── visualizations/      # Attention maps, etc.
 ├── tests/                   # Tests & verification
@@ -95,20 +100,18 @@ python tests\verify_phase_c.py
 - **Methodology**: `docs/methodology/WII_Elephant_ReID_System.pdf`
 - **Training Guide**: `kaggle/README_KAGGLE_DEPLOYMENT.md`
 - **Phase C Implementation**: `docs/implementation/Phase_C_README.md`
-- **Model Evaluation**: `outputs/results/kaggle_model_evaluation/metrics.json`
-- **Design Notes**: `docs/design_notes/`
+- **Model Evaluation**: `outputs/results/app_model_evaluation/metrics.json`
 
 ## Model Performance
 
-**Latest Model (Epoch 38, Val Loss: 0.3008):**
-- **Rank-1 Accuracy**: 85.26% ⭐
+**Production Model (Makhna Model):**
+- **Rank-1 Accuracy**: 93.59% ⭐
 - **Rank-5 Accuracy**: 96.79%
-- **Rank-10 Accuracy**: 97.44%
-- **mAP**: 82.78%
-- **Training Time**: 41 minutes (P100 GPU)
+- **Rank-10 Accuracy**: 98.72%
+- **mAP**: 80.85%
 - **Test Queries**: 156
 
-_Trained with GPU-optimized settings (batch_size=64, num_workers=4, mixed precision)_
+_Evaluated on held-out test set using `makhna_model.pth`_
 
 ## Key Features
 
