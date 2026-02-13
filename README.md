@@ -113,19 +113,19 @@ _Trained with GPU-optimized settings (batch_size=64, num_workers=4, mixed precis
 ## Key Features
 
 ### Enhanced Kaggle Training
-- ⚡ Mixed precision training (2-3x faster)
-- 💾 Automatic checkpoints every 5 epochs
-- 🛑 Early stopping with patience=15
-- 📊 Attention map visualization
-- 🔄 Resume from interrupted training
+-  Mixed precision training (2-3x faster)
+-  Automatic checkpoints every 5 epochs
+-  Early stopping with patience=15
+-  Attention map visualization
+-  Resume from interrupted training
 - 🎯 Gradient clipping & LR warmup
 
 ### Model Architecture
-- 🧠 Dual-branch design (texture + semantic)
-- 👁️ Biological Attention Maps (BAM)
-- 🎯 128-dim embeddings (optimized for small datasets)
-- 🔒 L2 normalization for metric learning
-- 🎲 Random Erasing (arrow bias prevention)
+-  Dual-branch design (texture + semantic)
+-  Biological Attention Maps (BAM)
+-  128-dim embeddings (optimized for small datasets)
+-  L2 normalization for metric learning
+-  Random Erasing (arrow bias prevention)
 
 ---
 
