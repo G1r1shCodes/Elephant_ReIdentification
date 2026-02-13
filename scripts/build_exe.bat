@@ -42,6 +42,8 @@ pyinstaller --noconfirm --onedir --name "ElephantID_System" ^
     --add-data "app.py;." ^
     --add-data "src;src" ^
     --add-data ".streamlit;.streamlit" ^
+    --add-data "makhna_model.pth;." ^
+    --add-data "gallery_embeddings.pt;." ^
     scripts\run_app_wrapper.py
 
 echo.
@@ -50,8 +52,8 @@ echo ✅ BUILD COMPLETE
 echo ========================================================
 echo.
 echo To run the app:
-echo 1. Copy 'makhna_model.pth', 'gallery_embeddings.pt', and 'data' folder
-echo    into 'dist\ElephantID_System\'
-echo 2. Run 'dist\ElephantID_System\ElephantID_System.exe'
+echo 1. Run 'dist\ElephantID_System\ElephantID_System.exe'
+echo.
+echo Note: Model and gallery files are now bundled automatically!
 echo.
 pause

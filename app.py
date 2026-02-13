@@ -12,12 +12,26 @@ from PIL import Image
 import numpy as np
 from pathlib import Path
 import sys
+import os
 import json
 from torchvision import transforms
 from datetime import datetime
 
+
+def resource_path(relative_path):
+    """Get absolute path to resource (works for dev and PyInstaller)."""
+    if hasattr(sys, '_MEIPASS'):
+        # Running as PyInstaller bundle
+        return os.path.join(sys._MEIPASS, relative_path)
+    # Running in development
+    return os.path.join(os.path.abspath("."), relative_path)
+
+
 # Add src to path
-sys.path.append(str(Path(__file__).parent))
+if hasattr(sys, '_MEIPASS'):
+    sys.path.append(sys._MEIPASS)
+else:
+    sys.path.append(str(Path(__file__).parent))
 
 from src.models.dual_branch_extractor import DualBranchFeatureExtractor
 
@@ -84,9 +98,9 @@ st.markdown("""
 @st.cache_data
 def load_gallery():
     """Load the database of known elephants."""
-    gallery_path = Path("gallery_embeddings.pt")
+    gallery_path = resource_path("gallery_embeddings.pt")
     
-    if not gallery_path.exists():
+    if not os.path.exists(gallery_path):
         st.error("⚠️ Database file (gallery_embeddings.pt) is missing.")
         return {}
     
@@ -129,10 +143,10 @@ def save_gallery(gallery):
 @st.cache_resource
 def load_model():
     """Load the AI Brain."""
-    model_path = Path("makhna_model.pth")
+    model_path = resource_path("makhna_model.pth")
     
-    if not model_path.exists():
-        st.error(f"❌ AI Model missing at {model_path.absolute()}")
+    if not os.path.exists(model_path):
+        st.error(f"❌ AI Model missing at {model_path}")
         return None
     
     try:

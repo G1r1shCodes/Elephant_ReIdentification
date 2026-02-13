@@ -2,7 +2,7 @@
 from PyInstaller.utils.hooks import collect_all
 from PyInstaller.utils.hooks import copy_metadata
 
-datas = [('app.py', '.'), ('src', 'src'), ('.streamlit', '.streamlit')]
+datas = [('app.py', '.'), ('src', 'src'), ('.streamlit', '.streamlit'), ('makhna_model.pth', '.'), ('gallery_embeddings.pt', '.')]
 binaries = []
 hiddenimports = ['streamlit', 'streamlit.web.cli', 'pandas', 'numpy', 'PIL', 'torch', 'torchvision', 'sklearn.utils._typedefs', 'sklearn.neighbors._partition_nodes']
 datas += copy_metadata('streamlit')

@@ -68,15 +68,15 @@ Thumbs.db
 
 # Documentation builds
 docs/_build/
-# Model checkpoints (too large for GitHub)
-*.pth
-*.pt
-*.ckpt
 
 # Model checkpoints (too large for GitHub)
 *.pth
 *.pt
 *.ckpt
+
+# EXCEPT these files needed for Streamlit deployment
+!makhna_model.pth
+!gallery_embeddings.pt
 
 # Large dataset files
 *.zip
@@ -89,5 +89,5 @@ notebooks/*.ipynb
 data/restructured/
 
 # Generated Outputs
-outputs/makhna_confusion_matrix.png
+/makhna_confusion_matrix.png
 outputs/results/embedding_analysis.png
