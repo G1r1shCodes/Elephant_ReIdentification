@@ -274,6 +274,10 @@ def main():
             features = extract_features(model, image, enhanced_mode)
             top_matches = find_top_matches(features, gallery, top_k=5)
         
+        # Store in session state for later use (e.g., saving to database)
+        st.session_state['current_image'] = image
+        st.session_state['current_embedding'] = features
+        
         if not top_matches:
             st.error("Gallery is empty.")
             st.stop()
