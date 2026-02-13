@@ -37,7 +37,11 @@ pip install -r requirements.txt
 python tests\evaluate_kaggle_model.py
 
 # Run verification tests
+# Run verification tests
 python tests\verify_phase_c.py
+
+# Build Standalone Executable
+See [docs/BUILD_INSTRUCTIONS.md](docs/BUILD_INSTRUCTIONS.md)
 ```
 
 ## Project Status
