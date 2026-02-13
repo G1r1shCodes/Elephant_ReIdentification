@@ -329,7 +329,7 @@ def main():
         # LEFT COLUMN: Image
         with col1:
             st.markdown('<div class="step-header">1️⃣ Uploaded Photo</div>', unsafe_allow_html=True)
-            st.image(image, caption="Field Photo", use_container_width=True, channels="RGB")
+            st.image(image, caption="Field Photo", width=600, channels="RGB")
         
         # RIGHT COLUMN: Top Result
         with col2:
