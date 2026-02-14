@@ -54,44 +54,61 @@ st.markdown("""
         color: #1B5E20; /* Dark Green */
         text-align: center;
         margin-bottom: 0.5rem;
+        margin-top: 1rem;
+        padding: 10px 0;
     }
     .subtitle {
         text-align: center;
         color: #555;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
         font-size: 1.2rem;
+        padding-bottom: 1rem;
     }
     .step-header {
         color: #2E7D32;
         font-size: 1.3rem;
         font-weight: bold;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        padding: 8px 0;
+        clear: both;
     }
     .result-card {
         background-color: #F1F8E9;
-        padding: 20px;
+        padding: 25px;
         border-radius: 10px;
         border: 1px solid #C5E1A5;
         text-align: center;
         margin-bottom: 20px;
+        margin-top: 15px;
     }
     .match-title {
         color: #2E7D32;
         font-size: 1.8rem;
         font-weight: bold;
-        margin: 0;
+        margin: 10px 0;
     }
     .no-match-card {
         background-color: #FFF3E0;
-        padding: 20px;
+        padding: 25px;
         border-radius: 10px;
         border: 1px solid #FFE0B2;
         text-align: center;
+        margin-top: 15px;
+    }
+    /* Better spacing for columns */
+    [data-testid="column"] {
+        padding: 10px;
+    }
+    /* Prevent overlap in file uploader */
+    [data-testid="stFileUploader"] {
+        margin-bottom: 20px;
+        padding-top: 10px;
     }
     /* Hide Streamlit components that look too technical */
     .stDeployButton {display:none;}
     #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -288,6 +305,15 @@ def main():
         
         st.divider()
         st.markdown("### ⚙️ Ranger Tools")
+        
+        # Test Mode Toggle
+        test_mode = st.toggle("🧪 Test Mode", 
+                             value=False,
+                             help="Enable test mode to experiment without affecting the main database. Changes will be saved to a separate test file.")
+        
+        if test_mode:
+            st.warning("⚠️ **Test Mode Active** - Changes won't affect the main database")
+        
         enhanced_mode = st.toggle("Enhanced Scan Mode", 
                                 help="Turn this on if the photo is blurry or difficult. It takes slightly longer but provides better accuracy.")
         
@@ -296,6 +322,10 @@ def main():
     # --- MAIN CONTENT ---
     model = load_model()
     if not model: st.stop()
+    
+    # Test Mode Banner (if active)
+    if test_mode:
+        st.info("🧪 **Test Mode Active** - All changes will be saved to `gallery_test.pt` instead of the main database.")
 
     # Step 1: Upload
     st.markdown('<div class="step-header">1️⃣ Upload Photo</div>', unsafe_allow_html=True)
@@ -328,7 +358,6 @@ def main():
         
         # LEFT COLUMN: Image
         with col1:
-            st.markdown('<div class="step-header">1️⃣ Uploaded Photo</div>', unsafe_allow_html=True)
             st.image(image, caption="Field Photo", width=600, channels="RGB")
         
         # RIGHT COLUMN: Top Result
