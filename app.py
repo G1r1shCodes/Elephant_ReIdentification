@@ -354,35 +354,36 @@ def main():
         is_match = top_result['score'] > 0.4  # Threshold check
         
         # --- UI LAYOUT ---
-        col1, col2 = st.columns([1, 1.2], gap="large")
+        st.markdown('<div class="step-header">2️⃣ Analysis Result</div>', unsafe_allow_html=True)
+        
+        col1, col2 = st.columns([1.1, 1], gap="large")
         
         # LEFT COLUMN: Image
         with col1:
-            st.image(image, caption="Field Photo", width=600, channels="RGB")
+            st.image(image, caption="Field Photo", use_container_width=True)
         
         # RIGHT COLUMN: Top Result
         with col2:
-            st.markdown('<div class="step-header">2️⃣ Analysis Result</div>', unsafe_allow_html=True)
             
             # Display Top Result
             if is_match:
                 if conf > 99.9:
                     st.markdown(f"""
-                    <div class="result-card" style="border-color: #4CAF50; background-color: #E8F5E9;">
-                        <div style="font-size: 1.2rem; color: #555;">Exact Image Match!</div>
-                        <div class="match-title">{match_id}</div>
-                        <div style="margin-top: 10px; font-size: 1.0rem; color: #2E7D32;">
+                    <div class="result-card" style="border-color: #4CAF50; background-color: #E8F5E9; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-size: 1.3rem; color: #555; margin-bottom: 15px;">✅ Exact Image Match!</div>
+                        <div class="match-title" style="font-size: 2.2rem; margin: 15px 0;">{match_id}</div>
+                        <div style="margin-top: 15px; font-size: 1.1rem; color: #2E7D32;">
                             (Photo already in database)
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
                 else:
                     st.markdown(f"""
-                    <div class="result-card">
-                        <div style="font-size: 1.2rem; color: #555;">Best Match:</div>
-                        <div class="match-title">{match_id}</div>
-                        <div style="margin-top: 10px; font-size: 1.1rem;">
-                            <span style="background-color: #2E7D32; color: white; padding: 4px 8px; border-radius: 4px;">Certainty: <b>{conf:.1f}%</b></span>
+                    <div class="result-card" style="min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-size: 1.3rem; color: #555; margin-bottom: 15px;">Best Match:</div>
+                        <div class="match-title" style="font-size: 2.2rem; margin: 15px 0;">{match_id}</div>
+                        <div style="margin-top: 15px; font-size: 1.2rem;">
+                            <span style="background-color: #2E7D32; color: white; padding: 8px 16px; border-radius: 6px; font-weight: bold;">Certainty: {conf:.1f}%</span>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -397,10 +398,14 @@ def main():
                                  try: st.image(str(p), use_container_width=True)
                                  except: pass
             else:
-                st.markdown("""
-                <div class="no-match-card">
-                    <h3>❓ Unknown Elephant</h3>
-                    <p>No confident match found.</p>
+                st.markdown(f"""
+                <div class="no-match-card" style="min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">❓</div>
+                    <h3 style="margin: 10px 0; font-size: 1.8rem; color: #E65100;">Unknown Elephant</h3>
+                    <p style="font-size: 1.1rem; color: #555; margin: 10px 0;">No confident match found in database.</p>
+                    <div style="margin-top: 15px; font-size: 1.0rem; color: #777;">
+                        <strong>Closest match:</strong> {top_result['id']} ({conf:.1f}%)
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
 
